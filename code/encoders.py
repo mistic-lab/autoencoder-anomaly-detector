@@ -42,7 +42,7 @@ class convautoencoder(nn.Module):
             nn.ConvTranspose1d(16, 8, 5, stride=3, padding=1),
             nn.ReLU(True),
             nn.ConvTranspose1d(8, 1, 1, stride=2, padding=1),
-            nn.Linear(495,segment_size)  # make the output the same shape as the unput
+            nn.Linear(495,500)  # make the output the same shape as the unput
         )
 
     def forward(self, x):
