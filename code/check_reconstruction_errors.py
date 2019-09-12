@@ -6,9 +6,10 @@ import math
 import numpy as np
 import statistics
 import matplotlib.pyplot as plt
+from plot_baseband_RFI import plot_detection
 
-errors = np.load('errors.npy')
-bbfiles = np.load('bbfiles.npy')
+errors = np.load('../data/errors.npy')
+bbfiles = np.load('../data/bbfiles.npy')
 
 collectionDict = {}
 for i in range(len(bbfiles)):
@@ -22,12 +23,25 @@ for i in range(len(bbfiles)):
 
 print("Number of bb files: {}".format(len(collectionDict)))
 stddevs = []
+avgs = []
+labels = []
 
-for value in collectionDict.values():
+for key, value in collectionDict.items():
     stddevs.append(np.std(value))
+    avgs.append(np.average(value))
+    labels.append(key)
+
 
 
 
 plt.hist(stddevs, 50, density=True)
 plt.title("STDEV of reconstruction error for each bbFile")
 plt.show()
+
+plt.hist(avgs, 50, density=True)
+plt.title("AVG of reconstruction error for each bbFile")
+plt.show()
+
+i = np.argmax(np.array(avgs))
+
+plot_detection(bb_file=labels[i], error=avgs[i])
