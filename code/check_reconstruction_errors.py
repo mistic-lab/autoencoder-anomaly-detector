@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from plot_baseband_RFI import plot_detection
 
 errors = np.load('../data/errors.npy')
-bbfiles = np.load('../data/bbfiles.npy')
+bbfiles = np.load('../data/labels.npy')
 
 collectionDict = {}
 for i in range(len(bbfiles)):
@@ -33,14 +33,14 @@ for key, value in collectionDict.items():
 
 
 
+fig, (ax1, ax2) = plt.subplots(2,1)
+ax1.hist(stddevs, 50, density=True)
+ax1.set_title("STDEV of reconstruction error for each bbFile")
 
-plt.hist(stddevs, 50, density=True)
-plt.title("STDEV of reconstruction error for each bbFile")
-plt.show()
+ax2.hist(avgs, 50, density=True)
+ax2.set_title("AVG of reconstruction error for each bbFile")
 
-plt.hist(avgs, 50, density=True)
-plt.title("AVG of reconstruction error for each bbFile")
-plt.show()
+plt.savefig("../figures/bbStats.png")
 
 i = np.argmax(np.array(avgs))
 

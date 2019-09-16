@@ -13,9 +13,9 @@ X = []
 X_labels = np.array([])
 
 # Grab all the waveforms
-files = glob.glob("/media/nsbruce/Backup Plus/460MHz/waveforms/*")
+files = glob.glob("/Users/nsbruce/Documents/RFI/460DATA/waveforms/*")
     
-for file in files[1000:2000]:
+for file in files[2000:]:
     data = np.fromfile(file)
     # Get length that rounds to nearest multiple of segment size
     new_len = round_down(len(data), segment_size)
@@ -31,5 +31,5 @@ for file in files[1000:2000]:
 X = np.array(X)
 print("File: {}, X.shape: {}, X_labels.shape: {}".format(file, X.shape, X_labels.shape))
 
-np.save('reshapedwaveforms_second1000.npy', X)
-np.save('reshapedwaveforms_second1000labels.npy', X_labels)
+np.save('../data/reshapedwaveforms_rest.npy', X)
+np.save('../data/reshapedwaveforms_restlabels.npy', X_labels)

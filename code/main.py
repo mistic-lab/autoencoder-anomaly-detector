@@ -49,7 +49,7 @@ print("has_cuda={}".format(has_cuda))
 X = []
 
 # Grab all the waveforms
-X = np.load('reshapedwaveforms_first1000.npy')
+X = np.load('../data/reshapedwaveforms_first2000.npy')
 
 X = torch.FloatTensor(X)
 
@@ -128,8 +128,8 @@ print('\nAverage validation loss = {}'.format(statistics.mean(test_losses)))
 del X_test
 
 ########## Run new data through trained model ##########
-X = np.load('reshapedwaveforms_second1000.npy')
-X_labels=np.load('reshapedwaveforms_second1000labels.npy')
+X = np.load('../data/reshapedwaveforms_rest.npy')
+X_labels=np.load('../data/reshapedwaveforms_restlabels.npy')
 
 X = torch.FloatTensor(X)
 
@@ -151,8 +151,10 @@ with torch.no_grad():
         anom_labels.append(X_labels[i])
 print('\nAverage test loss = {}'.format(statistics.mean(anom_losses)))
 
-results = np.array([anom_losses, anom_labels])
-np.save('results.npy', results)
+np.save('../data/errors.npy', anom_losses)
+np.save('../data/labels.npy', anom_labels)
+# results = np.array([anom_losses, anom_labels])
+# np.save('../data/results.npy', results)
 
 
 ########## Plot results ##########
@@ -166,5 +168,5 @@ if args.make_plots:
     plt.xlabel('Reconstruction Error, $||x - \hat{x}||_2^2$')
     plt.ylabel('Density (%)')
     plt.grid(True)
-    plt.savefig('reconstruction_error.png')
+    plt.savefig('../figures/reconstruction_error.png')
 
