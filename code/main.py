@@ -15,9 +15,9 @@ from encoders import convautoencoder
 from utils import round_down, get_conditional_indexes, build_dataset
 
 parser = argparse.ArgumentParser('Train and test an autoencoder for detecting anomalous RFI')
-parser.add_argument('--batch-size', type=int, default=100, help='training batch size')
+parser.add_argument('--batch-size', type=int, default=500, help='training batch size')
 parser.add_argument('--segment-size', type=int, default=500, help='size to split inputs down to')
-parser.add_argument('--num-epochs', type=int, default=100, help='number of times to iterate through training data')
+parser.add_argument('--num-epochs', type=int, default=1000, help='number of times to iterate through training data')
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--make-plots', type=bool, default=True, help='whether or not to plot a hitogram of reconstruction error')
 args = parser.parse_args()
@@ -49,7 +49,7 @@ print("has_cuda={}".format(has_cuda))
 X = []
 
 # Grab all the waveforms
-X = np.load('../data/reshapedwaveforms_first2000.npy')
+X = np.load('/home/nsbruce/RFI/data/training_testing_waveforms.npy')
 
 X = torch.FloatTensor(X)
 
@@ -128,8 +128,8 @@ print('\nAverage validation loss = {}'.format(statistics.mean(test_losses)))
 del X_test
 
 ########## Run new data through trained model ##########
-X = np.load('../data/reshapedwaveforms_rest.npy')
-X_labels=np.load('../data/reshapedwaveforms_restlabels.npy')
+X = np.load('/home/nsbruce/RFI/data/validation_waveforms.npy')
+X_labels=np.load('/home/nsbruce/RFI/data/validation_waveform_labels.npy')
 
 X = torch.FloatTensor(X)
 
@@ -151,8 +151,8 @@ with torch.no_grad():
         anom_labels.append(X_labels[i])
 print('\nAverage test loss = {}'.format(statistics.mean(anom_losses)))
 
-np.save('../data/errors.npy', anom_losses)
-np.save('../data/labels.npy', anom_labels)
+np.save('/home/nsbruce/RFI/data/errors.npy', anom_losses)
+np.save('/home/nsbruce/RFI/data/labels.npy', anom_labels)
 # results = np.array([anom_losses, anom_labels])
 # np.save('../data/results.npy', results)
 
