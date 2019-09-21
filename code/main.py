@@ -15,9 +15,9 @@ from encoders import convautoencoder
 from utils import round_down, get_conditional_indexes, build_dataset
 
 parser = argparse.ArgumentParser('Train and test an autoencoder for detecting anomalous RFI')
-parser.add_argument('--batch-size', type=int, default=500, help='training batch size')
+parser.add_argument('--batch-size', type=int, default=300, help='training batch size')
 parser.add_argument('--segment-size', type=int, default=500, help='size to split inputs down to')
-parser.add_argument('--num-epochs', type=int, default=1000, help='number of times to iterate through training data')
+parser.add_argument('--num-epochs', type=int, default=500, help='number of times to iterate through training data')
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--make-plots', type=bool, default=True, help='whether or not to plot a hitogram of reconstruction error')
 args = parser.parse_args()
@@ -168,5 +168,5 @@ if args.make_plots:
     plt.xlabel('Reconstruction Error, $||x - \hat{x}||_2^2$')
     plt.ylabel('Density (%)')
     plt.grid(True)
-    plt.savefig('../figures/reconstruction_error.png')
+    plt.savefig('/home/nsbruce/RFI/data/reconstruction_error.png')
 
