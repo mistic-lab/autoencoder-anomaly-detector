@@ -106,6 +106,10 @@ for epochs in range(num_epochs):
     print('Epoch = {}, Average Loss = {}'.format(epochs, statistics.mean(train_losses)))
 
 del X_train
+
+## Save model
+torch.save(model.state_dict(), '/home/nsbruce/RFI/data/trained_conv_AE.pt')
+
 #####################################
 ##########    Validating   ##########
 #####################################
@@ -151,11 +155,10 @@ with torch.no_grad():
         anom_labels.append(X_labels[i])
 print('\nAverage test loss = {}'.format(statistics.mean(anom_losses)))
 
-np.save('/home/nsbruce/RFI/data/errors.npy', anom_losses)
-np.save('/home/nsbruce/RFI/data/labels.npy', anom_labels)
-# results = np.array([anom_losses, anom_labels])
-# np.save('../data/results.npy', results)
-
+np.save('/home/nsbruce/RFI/data/anom_errors.npy', anom_losses)
+np.save('/home/nsbruce/RFI/data/anom_labels.npy', anom_labels)
+np.save('/home/nsbruce/RFI/data/train_errors.npy', train_losses)
+np.save('/home/nsbruce/RFI/data/test_errors.npy', test_losses)
 
 ########## Plot results ##########
 
