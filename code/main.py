@@ -164,12 +164,18 @@ np.save('/home/nsbruce/RFI/data/test_errors.npy', test_losses)
 
 if args.make_plots:
     # make histogram
-    plt.hist(train_losses, 50, density=True, facecolor='g',label='train data')
-    plt.hist(test_losses, 50, density=True, facecolor='b',label='test data')
-    plt.hist(anom_losses, 50, density=True, facecolor='r',label='anomalous data')
+    plt.hist(train_losses, 50, density=True, facecolor='g',label='Training')
+    # plt.hist(test_losses, 50, density=True, facecolor='b',label='Validation')
+    # plt.hist(anom_losses, 50, density=True, facecolor='r',label='Testing')
+    plt.hist(test_losses, 50, density=True, facecolor='b',label='Validation', alpha=0.5)
+    plt.hist(anom_losses, 50, density=True, facecolor='r',label='Testing', alpha=0.5)
     plt.legend()
-    plt.xlabel('Reconstruction Error, $||x - \hat{x}||_2^2$')
+    plt.xlabel('Reconstruction Error (RME)')
     plt.ylabel('Density (%)')
-    plt.grid(True)
+    plt.title('Reconstruction error for (500 sample) segments')
+    plt.xlim([0,1.2])
+    plt.ylim([0,20])
+    # plt.ylim([0,100])
+
     plt.savefig('/home/nsbruce/RFI/data/reconstruction_error.png')
 

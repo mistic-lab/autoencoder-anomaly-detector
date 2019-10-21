@@ -15,7 +15,7 @@ def parse_bb_path(bb_file):
     parentName, dat, idx, c64 = bb_file.split('.')
     idx = int(idx)
     path = path.split('waveforms')[0]
-    h5File = path+parentName+'.h5'
+    h5File = path+'Spectra/'+parentName+'.h5'
     return idx, h5File
 
     
@@ -34,7 +34,7 @@ def plot_detection(bb_file=None, h5=None, index=None, error=None):
     if error is None:
         title='File: {}, RFI index {}'.format(h5File, idx)
     else:
-        title='File: {}, RFI index {}, Reconstruction error {}'.format(h5File, idx, str(error))
+        title='File: {}, Detection {}, Reconstruction error: {}%'.format(h5File[-13:], idx, str(error*100)[:4])
 
 
     with h5py.File(h5File, 'r') as f:
@@ -67,7 +67,7 @@ def plot_detection(bb_file=None, h5=None, index=None, error=None):
         ax.set_ylabel('Freq (MHz)')
         fig.colorbar(im, label='dB', ax=ax, orientation='vertical')
         ax.set_title(title)
-        plt.show()
+        plt.show(block=False)
 
 
 
